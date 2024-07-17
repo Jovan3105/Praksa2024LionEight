@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface LoginService {
     List<Users> findAll();
+    void save(Users userObj);
 }

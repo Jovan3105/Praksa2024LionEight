@@ -14,7 +14,7 @@ import java.util.List;
 public class LoginRestController {
 
     @Autowired
-private LoginService loginService;
+    private LoginService loginService;
 
     @GetMapping("/users")
     List<Users> findAll() {

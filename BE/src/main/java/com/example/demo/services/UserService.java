@@ -5,6 +5,7 @@ import com.example.demo.dtos.RegisterDto;
 import com.example.demo.dtos.UserDto;
 import com.example.demo.entity.Users;
 import com.example.demo.service.LoginService;
+import com.example.demo.service.LoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,15 +36,20 @@ public class UserService {
         }
         else
             return false;
-
-
-
-        /*users.stream()
-                .anyMatch(user -> email.equals(user.getEmail()) && password.equals(user.getPassword()));*/
     }
     public Boolean registerUser(RegisterDto registerDto){
-        UserDto u = new UserDto(1L,registerDto.getName(),registerDto.getSurname(),registerDto.getEmail(),registerDto.getPassword());
-        users.add(u);
+        Optional<Users> user = loginRepository.findAll().stream().filter(users1 -> registerDto.getEmail().equals(users1.getEmail())).findFirst();
+        if(user.isPresent())
+            return false;
+
+        Users u = new Users();
+        u.setName(registerDto.getName());
+        u.setSurname(registerDto.getSurname());
+        u.setEmail(registerDto.getEmail());
+        u.setPassword(registerDto.getPassword());
+
+        loginRepository.save(u);
+
         return true;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+
 
 @Entity
 @Table(name = "users")
@@ -17,7 +19,7 @@ public class Users {
     @Column(name = "Surname")
     private String surname;
 
-    @Column(name = "Email")
+    @Column(name = "Email",unique = true)
     private String email;
 
     @Column(name = "Password")
