@@ -1,0 +1,21 @@
+.main-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100svh;
+  max-width: 100vw;
+}
+.main-body {
+  padding-left: var(--paddingLeft);
+  padding-right: var(--paddingRight);
+  max-width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: var(--background-color-1);
+}
+
+@media only screen and (max-width: 992px) {
+  .main-body {
+    padding-left: var(--breakpoint-padding-left);
+    padding-right: var(--breakpoint-padding-right);
+  }
+}
