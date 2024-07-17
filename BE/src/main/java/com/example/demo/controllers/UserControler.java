@@ -3,11 +3,15 @@ package com.example.demo.controllers;
 import com.example.demo.dtos.CredentialsDto;
 import com.example.demo.dtos.LoginDto;
 import com.example.demo.dtos.RegisterDto;
+import com.example.demo.entity.Users;
 import com.example.demo.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -17,11 +21,13 @@ public class UserControler {
 
     @PostMapping("/checkLogin")
     public Boolean checkLogin(@RequestBody LoginDto credentials) {
-        String userName = credentials.getUsername();
+        String email = credentials.getEmail();
         String password = credentials.getPassword();
 
-        return userService.checkLogin(userName, password);
+        return userService.checkLogin(email, password);
+
     }
+
 
     @PostMapping("/register")
     public boolean register(@RequestBody RegisterDto registerDto){
