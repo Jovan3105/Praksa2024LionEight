@@ -4,14 +4,16 @@ import com.example.demo.dao.LoginRepository;
 import com.example.demo.dtos.RegisterDto;
 import com.example.demo.dtos.UserDto;
 import com.example.demo.entity.Users;
+import com.example.demo.exceptions.CustomException;
 import com.example.demo.service.LoginService;
 import com.example.demo.service.LoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,7 @@ public class UserService {
     }
 
     public Boolean checkLogin(String email, String password) {
-        Optional<Users> user = loginRepository.findAll().stream().filter(users1 -> email.equals(users1.getEmail())).findFirst();;
+        Optional<Users> user = loginRepository.findAll().stream().filter(users1 -> email.equals(users1.getEmail())).findFirst();
 
         if(user.isPresent()) {
             if (user.get().getPassword().equals(password))
@@ -35,7 +37,9 @@ public class UserService {
             return false;
         }
         else
-            return false;
+            //throw new CustomException("User not found", HttpStatus.NOT_FOUND);
+        return false;
+
     }
     public Boolean registerUser(RegisterDto registerDto){
         Optional<Users> user = loginRepository.findAll().stream().filter(users1 -> registerDto.getEmail().equals(users1.getEmail())).findFirst();

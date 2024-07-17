@@ -20,11 +20,11 @@ public class UserControler {
     private final UserService userService;
 
     @PostMapping("/checkLogin")
-    public Boolean checkLogin(@RequestBody LoginDto credentials) {
+    public ResponseEntity<Boolean> checkLogin(@RequestBody LoginDto credentials) {
         String email = credentials.getEmail();
         String password = credentials.getPassword();
 
-        return userService.checkLogin(email, password);
+        return ResponseEntity.ok(userService.checkLogin(email,password));
 
     }
 
