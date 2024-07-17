@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  text-align: center;
+
+  --paddingLeft: 15%;
+  --paddingRight: 15%;
+
+  --background-color-1: white;
+
+  --palette-color-1: #1a3636;
+  --palette-color-2: #40534c;
+  --palette-color-3: #677d6a;
+  --palette-color-4: #d6bd98;
+
+  --breakpoint-padding-left: 20px;
+  --breakpoint-padding-right: 20px;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+}
