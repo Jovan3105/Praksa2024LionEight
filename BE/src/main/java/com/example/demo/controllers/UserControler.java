@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class UserControler {
-    private final UserService userService;
+    private  UserService userService;
 
     @PostMapping("/checkLogin")
     public ResponseEntity<Boolean> checkLogin(@RequestBody LoginDto credentials) {
@@ -25,7 +25,6 @@ public class UserControler {
         String password = credentials.getPassword();
 
         return ResponseEntity.ok(userService.checkLogin(email,password));
-
     }
 
 

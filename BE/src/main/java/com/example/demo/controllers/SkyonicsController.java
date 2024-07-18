@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SkyonicsController {
 
     @Autowired
-    private final SkyonicsService skyonicsService;
+    private SkyonicsService skyonicsService;
 
     @PostMapping
     public String touchEndpoint(String command,String deviceNumber){
