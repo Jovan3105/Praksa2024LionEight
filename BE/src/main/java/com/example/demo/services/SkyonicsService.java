@@ -37,7 +37,7 @@ public class SkyonicsService {
                     .header("Content-Type","application/json")
                     .header("Accept-Encoding","gzip, deflate, br")
                     .header("Accept","application/json")
-                    .body(Mono.just(request), CommandRequest.class)
+                    .body(Mono.just(request.getCommand()), String.class)
                     .retrieve()
                     .bodyToMono(String.class);
         } catch (Exception e) {
