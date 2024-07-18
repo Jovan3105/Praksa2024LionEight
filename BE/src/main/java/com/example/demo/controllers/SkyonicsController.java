@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 public class SkyonicsController {
 
     @Autowired
-    private final SkyonicsService skyonicsService;
+    private SkyonicsService skyonicsService;
 
     @PostMapping("/api/setCommand")
     public Mono<String> touchEndpoint(@RequestBody SkyonicsRequest request){
