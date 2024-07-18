@@ -1,3 +1,3 @@
 export const enviroment = {
-  BACK_END_URL: 'https://localhos:8080',
+  BACK_END_URL: 'http://localhost:8080',
 };

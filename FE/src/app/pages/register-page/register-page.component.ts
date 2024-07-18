@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,6 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { RegisterUserDTS } from '../../shared/models/register-user-dts';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-page',
@@ -20,17 +23,21 @@ export class RegisterPageComponent {
   registerForm: FormGroup;
 
   registerDTS: RegisterUserDTS = {
-    firstName: '',
-    lastName: '',
-    username: '',
+    name: '',
+    surname: '',
+    email: '',
     password: '',
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.registerForm = this.formBuilder.group({
-      firstName: [this.registerDTS.firstName, Validators.required],
-      lastName: [this.registerDTS.lastName, [Validators.required]],
-      username: [this.registerDTS.username, [Validators.required]],
+      name: [this.registerDTS.name, Validators.required],
+      surname: [this.registerDTS.surname, [Validators.required]],
+      email: [this.registerDTS.email, [Validators.required, Validators.email]],
       password: [
         this.registerDTS.password,
         [Validators.required, Validators.minLength(6)],
@@ -39,6 +46,16 @@ export class RegisterPageComponent {
   }
 
   onSubmit(): void {
-    console.log(this.registerForm.value);
+    this.authService
+      .register({ ...this.registerForm.value, confirmedPassword: '1' })
+      .subscribe({
+        error: () => {
+          console.log('Error');
+        },
+        complete: () => {
+          console.log('Succesfull registration');
+          this.router.navigate(['/']);
+        },
+      });
   }
 }

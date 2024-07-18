@@ -1,6 +1,6 @@
 export interface RegisterUserDTS {
-  firstName: string;
-  lastName: string;
-  username: string;
+  name: string;
+  surname: string;
+  email: string;
   password: string;
 }
