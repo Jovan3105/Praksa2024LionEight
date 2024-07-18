@@ -1,6 +1,11 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.CommandRequest;
+import com.example.demo.dtos.SkyonicsRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.net.URI;
@@ -12,22 +17,30 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 public class SkyonicsService {
-    private static String URL = "https://skyonics.net/api/skyonics/devicecommand";
-    public String touchEndpoint(String APIKey,String serialNumber,String command){
+    private static String BASEURL = "https://www.skyonics.net/";
+    private final WebClient webClient;
+    @Autowired
+    public SkyonicsService(WebClient.Builder webClientBuilder){
+        this.webClient = webClientBuilder.baseUrl(BASEURL).build();
+    }
+    public Mono<String> touchEndpoint(SkyonicsRequest request){
         try{
-            HttpClient client = HttpClient.newHttpClient();
-            URI uri = new URI(URL);
-            String json = "{\"APIKey\":\""+APIKey+"\",\"command\":\""+command+"\",\"serialNumber\":\""+serialNumber+"\"}";
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(uri)
+            return webClient.post()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("api/skyonics/devicecommand")
+                            .queryParam("APIKey",request.getAPIKey())
+                            .queryParam("serialNumber",request.getSerialNumber())
+                            .queryParam("mode",request.getMode())
+                            .build()
+
+                    )
                     .header("Content-Type","application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8))
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
-
-
-        } catch (URISyntaxException | IOException | InterruptedException e) {
+                    .header("Accept-Encoding","gzip, deflate, br")
+                    .header("Accept","application/json")
+                    .body(Mono.just(request), CommandRequest.class)
+                    .retrieve()
+                    .bodyToMono(String.class);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
