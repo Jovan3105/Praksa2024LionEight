@@ -46,16 +46,14 @@ export class RegisterPageComponent {
   }
 
   onSubmit(): void {
-    this.authService
-      .register({ ...this.registerForm.value, confirmedPassword: '1' })
-      .subscribe({
-        error: () => {
-          console.log('Error');
-        },
-        complete: () => {
-          console.log('Succesfull registration');
-          this.router.navigate(['/']);
-        },
-      });
+    this.authService.register(this.registerForm.value).subscribe({
+      error: (e) => {
+        console.log(e);
+      },
+      next: () => {
+        console.log('Succesfull registration');
+        this.router.navigate(['/login']);
+      },
+    });
   }
 }
