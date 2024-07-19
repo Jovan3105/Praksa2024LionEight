@@ -31,7 +31,7 @@ export class AuthService implements IAuthService {
   }
 
   isLoggedIn(): boolean {
-    const user = localStorage.getItem('User');
+    const user = localStorage ? localStorage.getItem('User') : null;
     if (user == null) return false;
     return true;
   }
