@@ -15,7 +15,7 @@ export class AuthService implements IAuthService {
   constructor(private http: HttpClient) {}
 
   register(body: RegisterUserDTS): Observable<any> {
-    return this.http.post(this.baseUrl + '/registracija', body, {
+    return this.http.post(this.baseUrl + '/register', body, {
       responseType: 'text',
     });
   }
