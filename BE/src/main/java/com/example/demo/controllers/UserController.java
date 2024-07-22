@@ -1,9 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dtos.LoginDto;
 import com.example.demo.dtos.RegisterDto;
 import com.example.demo.entity.Users;
-import com.example.demo.service.LoginService;
+import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class LoginRestController {
+public class UserController {
 
     @Autowired
-    private LoginService loginService;
+    private UserService userService;
 
     @GetMapping("/users")
     List<Users> findAll() {
-        return loginService.findAll();
+        return userService.findAll();
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
-        Boolean isAuthenticated = loginService.login(loginDto.getEmail(), loginDto.getPassword());
+        Boolean isAuthenticated = userService.login(loginDto.getEmail(), loginDto.getPassword());
         if (isAuthenticated) {
             return ResponseEntity.ok("Login successful");
         }
@@ -32,11 +32,18 @@ public class LoginRestController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
+//        @PostMapping("/checkLogin")
+//        public ResponseEntity<Boolean> checkLogin(@RequestBody LoginDto credentials) {
+//        String email = credentials.getEmail();
+//        String password = credentials.getPassword();
+//
+//        return ResponseEntity.ok(userService.checkLogin(email,password));
+//    }
 
-    @PostMapping("/registracija")
-    public ResponseEntity<String> registracija(@RequestBody RegisterDto registerDto) {
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         try {
-            boolean isRegistered = loginService.registracija(registerDto);
+            boolean isRegistered = userService.register(registerDto);
             if (isRegistered) {
                 return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
             } else {
@@ -46,5 +53,11 @@ public class LoginRestController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//        @PostMapping("/register")
+//        public boolean register(@RequestBody RegisterDto registerDto){
+//        return userService.registerUser(registerDto);
+//
+//    }
 
 }
