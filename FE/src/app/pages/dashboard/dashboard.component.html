@@ -1,1 +1,93 @@
-<p>dashboard works!</p>
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div class="border rounded">
+    <form
+      class="p-4"
+      [formGroup]="dashboardForm"
+      (ngSubmit)="onSubmit()"
+      style="min-width: 15svw"
+    >
+      <div class="form-group mb-3">
+        <label for="apiKey" class="form-label">API Key:</label>
+        <input
+          type="text"
+          formControlName="APIKey"
+          id="APIKey"
+          class="form-control"
+          placeholder="pym4jckmfvje7gzlfu3ybwfu4"
+          required
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="serialNumber" class="form-label">Serial Number:</label>
+        <input
+          type="text"
+          formControlName="serialNumber"
+          id="serialNumber"
+          class="form-control"
+          placeholder="87B030330163"
+          required
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="command" class="form-label">Command:</label>
+        <input
+          type="text"
+          formControlName="command"
+          id="command"
+          class="form-control"
+          placeholder="DIAG CAN"
+          required
+        />
+      </div>
+      <div class="text-center">
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!dashboardForm.valid"
+        >
+          Execute
+        </button>
+      </div>
+    </form>
+  </div>
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    id="modal"
+    [ngStyle]="{ display: isModalVisible }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Result</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="closeModal()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p name="result" id="result">
+            <b>Command String: </b> {{ displayData?.CommandString }}
+          </p>
+          <p name="result" id="result">
+            <b>Status: </b> {{ displayData?.Status }}
+          </p>
+          <p name="result" id="result">
+            <b>Handled By: </b> {{ displayData?.HandledBy }}
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closeModal()">
+            Ok
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
