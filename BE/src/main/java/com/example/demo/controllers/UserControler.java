@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class UserControler {
+    @Autowired
     private  UserService userService;
 
     @PostMapping("/checkLogin")

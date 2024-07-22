@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-public class CommandRequest {
-    private String command;
+public class SkyonicsRequestGet {
+    private String token;
+    private String APIKey;
 }
