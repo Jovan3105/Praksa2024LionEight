@@ -1,0 +1,7 @@
+.footer-container {
+  width: 100vw;
+  max-width: 100%;
+  padding-left: var(--paddingLeft);
+  padding-right: var(--paddingRight);
+  border: 0px;
+}
