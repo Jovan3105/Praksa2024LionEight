@@ -80,8 +80,8 @@ public class UserServiceImpl implements UserService {
             }
 
             Users u = new Users();
-            u.setName(registerDto.getName());
-            u.setSurname(registerDto.getSurname());
+            u.setFirstName(registerDto.getName());
+            u.setLastName(registerDto.getSurname());
             u.setEmail(registerDto.getEmail());
             u.setPassword(bCryptPasswordEncoder.encode(registerDto.getPassword()));
 

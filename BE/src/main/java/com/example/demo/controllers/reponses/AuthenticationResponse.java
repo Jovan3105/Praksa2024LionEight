@@ -1,4 +1,4 @@
-package com.example.demo.dtos;
+package com.example.demo.controllers.reponses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SkyonicsRequestGet {
+public class AuthenticationResponse {
     private String token;
-    private String APIKey;
 }

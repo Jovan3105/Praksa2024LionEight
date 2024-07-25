@@ -3,7 +3,6 @@ package com.example.demo.services;
 import com.example.demo.dtos.SkyonicsRequestGet;
 import com.example.demo.dtos.SkyonicsRequestPost;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -45,7 +43,7 @@ public class SkyonicsService {
             throw new RuntimeException(e);
         }
     }
-    public Mono<JsonNode> deviceCommandGET(@RequestBody SkyonicsRequestGet request){
+    public JsonNode deviceCommandGET(@RequestBody SkyonicsRequestGet request){
         try{
             return webClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -71,7 +69,8 @@ public class SkyonicsService {
                                     throw new RuntimeException(e);
                                 }
                             }
-                    );
+                    )
+                    .block();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
