@@ -46,9 +46,10 @@ export class LoginPageComponent {
         console.log(this.loginForm.value);
         console.log(e);
       },
-      next: () => {
+      next: (response) => {
         console.log('Succesfull login');
-        this.authService.setLogin(this.loginForm.value);
+        //console.log('Response', JSON.parse(response));
+        this.authService.setLogin(JSON.parse(response).token);
         this.router.navigate(['/']);
       },
     });

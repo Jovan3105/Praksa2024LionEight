@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 import { IsLoggedInPipe } from '../../../shared/pipes/is-logged-in.pipe';
+import { error } from 'console';
 
 @Component({
   selector: 'app-nav-bar',
@@ -22,7 +23,14 @@ export class NavBarComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('User');
+    this.authService.logoutRequest().subscribe({
+      error: (e) => {
+        console.log(e);
+      },
+      next: () => {
+        this.authService.logout();
+      },
+    });
     this.router.navigate(['/login']);
   }
 }
