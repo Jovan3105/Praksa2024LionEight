@@ -6,9 +6,6 @@ import lombok.*;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class SkyonicsRequestPost {
     @JsonProperty("APIKey")
     private String APIKey;

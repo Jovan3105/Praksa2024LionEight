@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.dtos.SkyonicsRequestGet;
 import com.example.demo.dtos.SkyonicsRequestPost;
+import com.example.demo.dtos.SkyonicsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +23,7 @@ public class SkyonicsService {
     public SkyonicsService(WebClient.Builder webClientBuilder){
         this.webClient = webClientBuilder.baseUrl(BASEURL).build();
     }
-    public Mono<String> deviceCommandPOST(SkyonicsRequestPost request){
+    public String deviceCommandPOST(SkyonicsRequestPost request){
         try{
             return webClient.post()
                     .uri(uriBuilder -> uriBuilder
@@ -38,12 +39,13 @@ public class SkyonicsService {
                     .header("Accept","application/json")
                     .body(Mono.just(request.getCommand()), String.class)
                     .retrieve()
-                    .bodyToMono(String.class);
+                    .bodyToMono(String.class)
+                    .block();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    public JsonNode deviceCommandGET(@RequestBody SkyonicsRequestGet request){
+    public SkyonicsResponse deviceCommandGET(@RequestBody SkyonicsRequestGet request){
         try{
             return webClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -57,19 +59,7 @@ public class SkyonicsService {
                     .header("Accept-Encoding","gzip, deflate, br")
                     .header("Accept","application/json")
                     .retrieve()
-                    .bodyToMono(String.class)
-                    .flatMap(
-                            response->{
-                                try{
-                                    JsonNode originalJson = objectMapper.readTree(response);
-                                    ObjectNode extended = (ObjectNode) originalJson;
-                                    extended.put("status",HttpStatus.OK.value());
-                                    return Mono.just(extended);
-                                } catch (JsonProcessingException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                    )
+                    .bodyToMono(SkyonicsResponse.class)
                     .block();
         } catch (Exception e) {
             throw new RuntimeException(e);

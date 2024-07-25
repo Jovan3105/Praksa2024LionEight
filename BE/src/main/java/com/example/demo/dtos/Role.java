@@ -1,6 +1,6 @@
 package com.example.demo.dtos;
 
 public enum Role {
-    USER,
+    ROLE_USER,
     ROLE_ADMIN
 }

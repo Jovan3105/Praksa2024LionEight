@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dtos.SkyonicsRequestGet;
 import com.example.demo.dtos.SkyonicsRequestPost;
+import com.example.demo.dtos.SkyonicsResponse;
 import com.example.demo.services.SkyonicsService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,22 +31,19 @@ public class SkyonicsController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/deviceCommand")
-    public JsonNode deviceCommand(@RequestBody SkyonicsRequestPost request) throws InterruptedException {
+    public ResponseEntity<SkyonicsResponse> deviceCommand(@RequestBody SkyonicsRequestPost request) throws InterruptedException {
 
-        //return skyonicsService.deviceCommandPOST(request);
-        System.out.println(request.getAPIKey()+" " + request.getCommand() + " " +request.getSerialNumber());
         if (Arrays.stream(commands).noneMatch(com->com.equals(request.getCommand()))){
-            ObjectNode jsonNode = objectMapper.createObjectNode();
-            jsonNode.put("ResultInfo","Command does not exists");
-            jsonNode.put("status",HttpStatus.BAD_REQUEST.value());
-            return jsonNode;
+            SkyonicsResponse response = new SkyonicsResponse();
+            response.setResultInfo("Command does not exists");
+            return ResponseEntity.badRequest().body(response);
         }
-        Mono<String> ms = skyonicsService.deviceCommandPOST(request);
-        String token = ms.block();
+
+        String token = skyonicsService.deviceCommandPOST(request);
         String[] s = token.split("\"");
         token = s[1];
         Thread.sleep(1000);
-        return skyonicsService.deviceCommandGET(new SkyonicsRequestGet(token,request.getAPIKey()));
+        return ResponseEntity.ok(skyonicsService.deviceCommandGET(new SkyonicsRequestGet(token,request.getAPIKey())));
 
     }
 
