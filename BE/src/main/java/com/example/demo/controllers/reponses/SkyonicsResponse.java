@@ -1,9 +1,8 @@
-package com.example.demo.dtos;
+package com.example.demo.controllers.reponses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.util.Date;
 @Data
 @Builder
 @AllArgsConstructor

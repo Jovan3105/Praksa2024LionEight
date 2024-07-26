@@ -1,9 +1,8 @@
-package com.example.demo.dtos;
+package com.example.demo.controllers.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder

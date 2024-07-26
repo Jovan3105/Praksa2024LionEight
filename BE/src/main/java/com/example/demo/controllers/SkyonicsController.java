@@ -1,9 +1,9 @@
 package com.example.demo.controllers;
 
 
-import com.example.demo.dtos.SkyonicsRequestGet;
-import com.example.demo.dtos.SkyonicsRequestPost;
-import com.example.demo.dtos.SkyonicsResponse;
+import com.example.demo.controllers.requests.SkyonicsRequestGet;
+import com.example.demo.controllers.requests.SkyonicsRequestPost;
+import com.example.demo.controllers.reponses.SkyonicsResponse;
 import com.example.demo.services.SkyonicsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
