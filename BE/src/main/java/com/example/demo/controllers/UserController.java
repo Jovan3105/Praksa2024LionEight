@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.controllers.reponses.LogoutResponse;
 import com.example.demo.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ public class UserController {
 
 
     @GetMapping("/api/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token){
-        return ResponseEntity.ok(userService.logout(token));
+    public ResponseEntity<LogoutResponse> logout(@RequestHeader("Authorization") String token){
+        return ResponseEntity.ok(new LogoutResponse(userService.logout(token)));
     }
 
 }
