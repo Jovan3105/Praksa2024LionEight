@@ -13,6 +13,7 @@ export class SkyonicsService {
   constructor(private http: HttpClient) {}
 
   sendDeviceCommand(body: SkyonicsDTS): Observable<any> {
+    //console.log(localStorage.getItem('JWT'));
     return this.http.post(this.baseUrl + '/deviceCommand', body, {
       responseType: 'text',
     });
