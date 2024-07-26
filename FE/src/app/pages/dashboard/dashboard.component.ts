@@ -10,14 +10,14 @@ import {
 } from '@angular/forms';
 import { SkyonicsDTS } from '../../shared/models/skyonics-dts';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { SkyonicsService } from '../../shared/services/skyonics.service';
 import bootstrap from '../../../main.server';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -41,6 +41,7 @@ export class DashboardComponent {
 
   isModalVisible: string = 'none';
   displayData: any;
+  isLoaderVisible: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -103,6 +104,7 @@ export class DashboardComponent {
       this.dashboardForm.value.command
     );
     console.log(this.dashboardForm.value);
+    this.isLoaderVisible = true;
     this.skyonicsService.sendDeviceCommand(this.dashboardForm.value).subscribe({
       error: (e) => {
         console.log(e);
@@ -111,6 +113,7 @@ export class DashboardComponent {
       next: (result) => {
         //console.log(JSON.parse(result));
         //console.log(JSON.stringify(result));
+        this.isLoaderVisible = false;
         this.displayData = JSON.parse(result);
         //console.log(this.displayData);
         this.openModal();

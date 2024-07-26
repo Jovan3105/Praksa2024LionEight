@@ -26,11 +26,13 @@ export class NavBarComponent implements OnInit {
     this.authService.logoutRequest().subscribe({
       error: (e) => {
         console.log(e);
+        console.log('greska');
       },
       next: () => {
+        console.log('Logout');
         this.authService.logout();
+        this.router.navigate(['/login']);
       },
     });
-    this.router.navigate(['/login']);
   }
 }

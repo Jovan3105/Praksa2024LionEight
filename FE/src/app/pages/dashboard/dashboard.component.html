@@ -7,7 +7,7 @@
       style="min-width: 15svw"
     >
       <div class="form-group mb-3">
-        <label for="apiKey" class="form-label">API Key:</label>
+        <label for="APIKey" class="form-label">API Key:</label>
         <input
           type="text"
           formControlName="APIKey"
@@ -75,7 +75,17 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div
+          class="modal-body d-flex align-items-center justify-content-center"
+          *ngIf="isLoaderVisible"
+        >
+          <span
+            class="loader"
+            [ngStyle]="{ display: isLoaderVisible ? 'block' : 'none' }"
+          ></span>
+        </div>
+
+        <div class="modal-body" *ngIf="!isLoaderVisible">
           <p name="result" id="result">
             <b>Command String: </b> {{ displayData?.CommandString }}
           </p>

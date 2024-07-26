@@ -35,12 +35,7 @@ export class AuthService implements IAuthService {
   }
 
   logoutRequest(): Observable<any> {
-    return this.http.post('http://localhost:8080/api/logout', {
-      headers: new HttpHeaders().set(
-        'Authorization',
-        'Bearer ' + this.localStorage?.getItem('JWT')
-      ),
-    });
+    return this.http.get('http://localhost:8080/api/logout');
   }
 
   setLogin(obj: any): void {
