@@ -43,7 +43,7 @@ export class LoginPageComponent {
   onSubmit(): void {
     this.authService.login(this.loginForm.value).subscribe({
       error: (e) => {
-        console.log(this.loginForm.value);
+        //console.log(this.loginForm.value);
         console.log(e);
       },
       next: (response) => {

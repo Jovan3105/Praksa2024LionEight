@@ -26,7 +26,7 @@ export class NavBarComponent implements OnInit {
     this.authService.logoutRequest().subscribe({
       error: (e) => {
         console.log(e);
-        console.log('greska');
+        //console.log('greska');
       },
       next: () => {
         console.log('Logout');

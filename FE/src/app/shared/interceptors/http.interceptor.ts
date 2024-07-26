@@ -10,6 +10,6 @@ export const HttpInterceptor: HttpInterceptorFn = (request, next) => {
       },
     });
   }
-  console.log('Interceptor sa tokenom', request);
+  //console.log('Interceptor sa tokenom', request);
   return next(request);
 };
